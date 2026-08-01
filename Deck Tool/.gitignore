@@ -1,0 +1,88 @@
+# ==========================================
+# Python (FastAPI Backend)
+# ==========================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments & Dependencies
+.venv/
+venv/
+ENV/
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Poetry / Pipenv / Rye lock files (uncomment if you want to ignore them, though usually tracked)
+#.poetry/
+#Pipfile.lock
+
+# FastAPI / Uvicorn / Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# ==========================================
+# Node / React TypeScript (Frontend)
+# ==========================================
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Production / Build output
+dist/
+build/
+out/
+
+# Testing
+coverage/
+
+# Next.js / Vite / CRA caches
+.next/
+.vuepress/dist
+.vitepress/dist
+.turbo
+.eslintcache
+
+# TypeScript
+*.tsbuildinfo
+
+# ==========================================
+# Environment Variables & Secrets (CRITICAL)
+# ==========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+*.pem
+*.key
+
+# ==========================================
+# Operating System & IDEs
+# ==========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Ehthumbs.db
+
+# IDEs (VS Code, WebStorm, PyCharm)
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
