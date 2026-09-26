@@ -1,4 +1,4 @@
-import type { UserBasicParams, LoginResponse } from "../types";
+import type { UserBasicParams, LoginResponse } from "../lib/types";
 import { request } from "./apiConfig";
 
 async function getSelf(): Promise<UserBasicParams> {

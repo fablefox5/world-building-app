@@ -1,8 +1,8 @@
 import type Deck from "../features/deck/Deck";
 import { request } from "./apiConfig";
+import type { CardType, UnformattedDeck } from "../lib/types";
 
-
-export async function getDecks(): Promise<Array<Deck>> {
+export async function getDecks(): Promise<Array<UnformattedDeck>> {
     const token = localStorage.getItem("token");
     const tokenType = localStorage.getItem("tokenType");
     if (!token || !tokenType) {
@@ -65,7 +65,7 @@ export async function addCard(deckId: number, type: string, range: Array<string 
         body: JSON.stringify({
             type,
             range,
-            notes,
+            ...(notes ? { notes } : {}),
         }),
     }, "Add card request failed");
     if (!response.ok) {
@@ -107,5 +107,43 @@ export async function deleteAllDecks(): Promise<void> {
     }, "Delete all decks request failed");
     if (!response.ok) {
         throw new Error("Failed to delete all decks");
+    }
+}
+
+export async function randomizeDeck(deckId: number): Promise<void> {
+    const token = localStorage.getItem("token");
+    const tokenType = localStorage.getItem("tokenType");
+    if (!token || !tokenType) {
+        throw new Error("No token found in local storage");
+    }
+
+    const response = await request(`/decks/${deckId}/randomize`, {
+        method: "PATCH",
+        headers: {
+            "Authorization": `${tokenType} ${token}`,
+            "Content-Type": "application/json",
+        },
+    }, "Randomize deck request failed");
+    if (!response.ok) {
+        throw new Error("Failed to randomize deck");
+    }
+}
+
+export async function nextCard(deckId: number): Promise<void> {
+    const token = localStorage.getItem("token");
+    const tokenType = localStorage.getItem("tokenType");
+    if (!token || !tokenType) {
+        throw new Error("No token found in local storage");
+    }
+
+    const response = await request(`/decks/${deckId}/next`, {
+        method: "PATCH",
+        headers: {
+            "Authorization": `${tokenType} ${token}`,
+            "Content-Type": "application/json",
+        },
+    }, "Next card request failed");
+    if (!response.ok) {
+        throw new Error("Failed to move to next card");
     }
 }

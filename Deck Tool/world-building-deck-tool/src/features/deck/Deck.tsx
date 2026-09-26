@@ -1,49 +1,33 @@
-import type { CardType } from "../../lib/types";
+import type { CardType, UnformattedDeck } from "../../lib/types";
 
 export default class Deck {
     deckName: string;
     deckId: number;
-    deckList: Array<CardType>;
+    deckList: Map<number, CardType>;
     deckIndices: Array<number>;
     
     constructor(deckName: string, deckId: number) {
-        this.deckList = new Array<CardType>(0);
+        this.deckList = new Map<number, CardType>();
         this.deckName = deckName;
         this.deckId = deckId;
-        this.deckIndices = new Array<number>(0);
-        
+        this.deckIndices = new Array<number>(0); //TRACKED WITH IDS
     }
 
-    static fullCreate(params: {deckName: string, deckId: number, deckList: Array<CardType>, deckIndices: Array<number>}) {
-        const newDeck = new Deck(params.deckName, params.deckId);
-        newDeck.deckList = [...params.deckList];
-        newDeck.deckIndices = [...params.deckIndices];
+    static fullCreate(deck: UnformattedDeck) {
+        const newDeck = new Deck(deck.deckName, deck.deckId);
+        newDeck.deckList = new Map<number, CardType>(deck.deckList.map((card) => [card.cardId, card]));
+        newDeck.deckIndices = [...deck.deckIndices];
         
         return newDeck;
     }
 
-    // addCard({type, range, notes}: {type: string, range: Array<string | number> | string | number, notes?: string}) {
-    //     if(typeof range === "string" || typeof range === "number") {
-    //         const iteratedArray: Array<number> = Array.from({length: Number(range)}, (_, index) => index+1);
-    //         console.log("number: ", iteratedArray);
-    //         this.deckList.push({type, range: iteratedArray, notes, cardId: });
-    //     }
-    //     else {
-    //         this.deckList.push({type, range, notes});
-    //     }
-    //     console.log("adding card: " + type);
-    //     console.log(this.deckIndices);
-    //     console.log(this.deckIndices.length);
-    //     this.deckIndices.push(this.deckIndices.length);
-    // }
-
-    deleteCard(index: number) {
-        this.deckList.splice(index, 1);
-        this.deckIndices = this.deckIndices.filter(value => value !== index)
+    deleteCard(id: number) {
+        this.deckList.delete(id);
+        this.deckIndices = this.deckIndices.filter(value => value !== id)
     }
 
-    getCardByIndex(index: number) {
-        return this.deckList[index];
+    getCardById(id: number) {
+        return this.deckList.get(id);
     }
     
 }

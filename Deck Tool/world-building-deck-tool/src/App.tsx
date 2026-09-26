@@ -1,8 +1,6 @@
 import { BrowserRouter } from 'react-router-dom'
 import './App.css'
-import DeckCreator from './components/DeckCreator'
-import DeckViewer from './components/DeckViewer'
-import MainMenu from './components/MainMenu'
+import LandingPage from './pages/LandingPage'
 import AuthProvider from './context/AuthContext'
 
 function App() {
@@ -10,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
     <AuthProvider>
-      <MainMenu />
+      <LandingPage />
     </AuthProvider>
     </BrowserRouter>
   )

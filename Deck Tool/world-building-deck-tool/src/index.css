@@ -39,9 +39,9 @@
     --bg: #16171d;
     --border: #2e303a;
     --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
+    --accent: #7EA5C5;
+    --accent-bg: #688ead;
+    --accent-border: #587b97;
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
@@ -52,9 +52,21 @@
   }
 }
 
+/* TAILWIND V4 THEME EXTENSIONS */
+@theme {
+  --color-app-bg: var(--bg);
+  --color-app-text: var(--text);
+  --color-app-heading: var(--text-h);
+  --color-app-border: var(--border);
+  --color-app-code: var(--code-bg);
+  --color-app-accent: var(--accent);
+  --color-app-accent-bg: var(--accent-bg);
+  --color-app-accent-border: var(--accent-border);
+}
+
 @layer base {
   button {
-    @apply p-1 bg-black text-white hover:text-black hover:bg-gray-200 cursor-pointer;
+    @apply cursor-pointer;
   }
 }
 
@@ -62,7 +74,7 @@
   width: 1126px;
   max-width: 100%;
   margin: 0 auto;
-  text-align: center;
+  text-align: left;
   border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
@@ -72,6 +84,8 @@
 
 body {
   margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 h1,
@@ -90,6 +104,7 @@ h1 {
     margin: 20px 0;
   }
 }
+
 h2 {
   font-size: 24px;
   line-height: 118%;
@@ -99,6 +114,7 @@ h2 {
     font-size: 20px;
   }
 }
+
 p {
   margin: 0;
 }

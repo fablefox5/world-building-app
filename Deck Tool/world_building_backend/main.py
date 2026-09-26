@@ -6,6 +6,7 @@ from custom_exceptions import register_custom_handlers
 from database import db_manager
 from routes.decks import deck_api_router
 from routes.users import user_api_router
+from fastapi_pagination import add_pagination
 
 
 @asynccontextmanager
@@ -34,3 +35,4 @@ app.add_middleware(
 app.include_router(deck_api_router)
 app.include_router(user_api_router)
 register_custom_handlers(app)
+add_pagination(app)

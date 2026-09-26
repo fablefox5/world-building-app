@@ -67,7 +67,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> TokenData:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
 async def requires_admin(payload: dict = Depends(get_current_user)):
-    is_admin = payload["is_admin"] or False
+    is_admin = payload.is_admin or False
     if not is_admin:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="This user is not authorized for this action.")
 

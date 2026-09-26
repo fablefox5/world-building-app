@@ -1,26 +1,31 @@
 import { useState, createContext, useContext, useEffect } from 'react';
-import type { AuthContextType, UserBasicParams } from '../types';
+import type { AuthContextType, UserBasicParams } from '../lib//types';
 import { getSelf } from '../services/userServices';
 import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const [token, setToken] = useState<string | null>(() => localStorage.getItem("token"));
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => !!localStorage.getItem("token"));
     const [user, setUser] = useState<UserBasicParams | null>(null);
-    const [token, setToken] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
     const navigate = useNavigate();
 
     const login = (token: string) => {
+        localStorage.setItem("token", token);
         setToken(token);
         setIsAuthenticated(true);
-        navigate('/'); 
+        navigate('/');
     }
 
     const logout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("tokenType");
         setUser(null);
         setToken(null);
         setIsAuthenticated(false);
+        navigate('/');
     };
 
     useEffect(() => {
@@ -31,7 +36,13 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
                     setUser(data);
                 } catch (error) {
                     console.error("Failed to fetch user:", error);
+                    // Token is bad — clear it so we don't keep retrying
+                    logout();
+                } finally {
+                    setLoading(false);
                 }
+            } else {
+                setLoading(false);
             }
         }
 
@@ -39,7 +50,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     }, [token]);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, token, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, token, login, logout, loading }}>
             {children}
         </AuthContext.Provider>
     );
